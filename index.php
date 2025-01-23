@@ -1,8 +1,8 @@
 <?php 
-include('php/querry.php');
+include('php/query.php');
 ?>
 <?php
-include('component/header.php')
+include('compnents/header.php');
 ?>
 	<!-- Slider -->
 	<section class="section-slide">
