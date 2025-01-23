@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 23, 2025 at 05:13 AM
+-- Generation Time: Jan 23, 2025 at 06:52 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -18,20 +18,55 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `pr2_ecom`
+-- Database: `p2b_ecom`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `category`
+-- Table structure for table `categories`
 --
 
-CREATE TABLE `category` (
-  `ID` int(11) NOT NULL,
-  `NAME` varchar(30) NOT NULL,
+CREATE TABLE `categories` (
+  `catId` int(11) NOT NULL,
+  `name` varchar(30) NOT NULL,
   `image` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `categories`
+--
+
+INSERT INTO `categories` (`catId`, `name`, `image`) VALUES
+(4, 'food', 'f.webp'),
+(6, 'Perfumes', 'p1.webp'),
+(7, 'Bags', 'b1.webp'),
+(8, 'Watches', 'w1.webp');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `products`
+--
+
+CREATE TABLE `products` (
+  `product_id` int(11) NOT NULL,
+  `product_name` varchar(30) NOT NULL,
+  `product_price` int(11) NOT NULL,
+  `product_quantity` int(11) NOT NULL,
+  `product_image` varchar(150) NOT NULL,
+  `product_description` varchar(200) NOT NULL,
+  `product_cat_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `products`
+--
+
+INSERT INTO `products` (`product_id`, `product_name`, `product_price`, `product_quantity`, `product_image`, `product_description`, `product_cat_id`) VALUES
+(2, 'mobile', 8500, 14, 'f1.webp', '', 4),
+(3, 'Royal', 6000, 90, 'product-06.jpg', 'hello', 8),
+(4, 'Bag 1', 1200, 90, 'gallery-06.jpg', 'hello', 7);
 
 -- --------------------------------------------------------
 
@@ -41,7 +76,7 @@ CREATE TABLE `category` (
 
 CREATE TABLE `role` (
   `id` int(11) NOT NULL,
-  `name` varchar(50) NOT NULL
+  `name` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -72,17 +107,25 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `name`, `email`, `password`, `role_id`) VALUES
 (1, 'admin', 'admin@gmail.com', '123', 1),
-(2, 'taimoor', 'taimoor@gmail.com', '123', 2);
+(2, 'ali', 'ali@gmail.com', '123', 2),
+(3, 'ALI', 'ali@gmail.com', '123', 2);
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `category`
+-- Indexes for table `categories`
 --
-ALTER TABLE `category`
-  ADD PRIMARY KEY (`ID`);
+ALTER TABLE `categories`
+  ADD PRIMARY KEY (`catId`);
+
+--
+-- Indexes for table `products`
+--
+ALTER TABLE `products`
+  ADD PRIMARY KEY (`product_id`),
+  ADD KEY `product_cat_id` (`product_cat_id`);
 
 --
 -- Indexes for table `role`
@@ -102,10 +145,16 @@ ALTER TABLE `users`
 --
 
 --
--- AUTO_INCREMENT for table `category`
+-- AUTO_INCREMENT for table `categories`
 --
-ALTER TABLE `category`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `categories`
+  MODIFY `catId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT for table `products`
+--
+ALTER TABLE `products`
+  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `role`
@@ -117,11 +166,17 @@ ALTER TABLE `role`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `products`
+--
+ALTER TABLE `products`
+  ADD CONSTRAINT `products_ibfk_1` FOREIGN KEY (`product_cat_id`) REFERENCES `categories` (`catId`);
 
 --
 -- Constraints for table `users`
